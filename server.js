@@ -14,6 +14,9 @@ router.get('/', (req, res) => {
 });
 
 router.post('/message', (req, res) => {
+  console.log(req.headers);
+  res.header({ 'coustum-type': 'nuestrovalor' });
+
   res.send('hola desde router post');
 });
 
