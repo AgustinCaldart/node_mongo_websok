@@ -1,10 +1,13 @@
 const express = require('express');
+const router = express.Router();
 //requirimos express
 const app = express();
 
-//utilizamos endpoint gracias a use
-app.use('/', (req, res) => {
-  res.send('Hola');
+//iniciamos el router
+app.use(router);
+
+router.get('/', (req, res) => {
+  res.send('Hola desde router');
 });
 
 //prendemos express
