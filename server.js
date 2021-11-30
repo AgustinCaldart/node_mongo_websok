@@ -29,6 +29,7 @@ router.post('/message', (req, res) => {
   res.status(201).send('hola desde router post');
 });
 
+app.use('/app', express.static('static'));
 //prendemos express
 app.listen(3000);
 console.log(`la aplicacion esta escuchando en http://localhost:3000`);
