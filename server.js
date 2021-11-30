@@ -2,12 +2,19 @@ const express = require('express');
 const router = express.Router();
 //requirimos express
 const app = express();
-
+//trabajar json
+app.use(express.json());
 //iniciamos el router
 app.use(router);
 
 router.get('/', (req, res) => {
+  const body = req.body;
+  console.log(body);
   res.send('Hola desde router');
+});
+
+router.post('/message', (req, res) => {
+  res.send('hola desde router post');
 });
 
 //prendemos express
