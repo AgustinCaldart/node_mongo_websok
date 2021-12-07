@@ -1,6 +1,6 @@
 const express = require('express');
 const { success, problem } = require('./../../network/response');
-
+const controller = require('./controller');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -8,15 +8,30 @@ router.get('/', (req, res) => {
   console.log(body);
   res.send('Hola desde router');
 });
-router.get('/format', (req, res) => {
-  if (req.query.error == 'ok') {
-    problem(req, res, 'Error simulado', 401);
-  } else {
-    success(req, res, 'Creado correctamente', 201);
+router.post('/', (req, res) => {
+  controller
+    .addMessagePromise(req.body.user, req.body.message)
+    .then((fullMessage) => {
+      success(req, res, fullMessage, 201);
+    })
+    .catch((e) => {
+      problem(req, res, 'Error simulado', 401);
+    });
+});
+
+router.post('/async', async (req, res) => {
+  try {
+    const newMessage = await controller.addMessageAsync(
+      req.body.user,
+      req.body.message
+    );
+    success(req, res, newMessage, 201);
+  } catch (error) {
+    problem(req, res, error, 401);
   }
 });
 
-router.post('/', (req, res) => {
+router.post('/headers', (req, res) => {
   console.log(req.headers);
   res.header({ 'coustum-type': 'nuestrovalor' });
 
