@@ -1,3 +1,5 @@
+const store = require('./store');
+
 function addMessagePromise(user, message) {
   return new Promise((resolve, reject) => {
     if (!user || !message) {
@@ -24,11 +26,18 @@ async function addMessageAsync(user, message) {
     message: message,
     data: new Date(),
   };
-  console.log(fullMessage);
+  store.add(fullMessage);
   return fullMessage;
+}
+
+async function getMessages() {
+  console.log(store.list());
+  const rta = await store.list();
+  return rta;
 }
 
 module.exports = {
   addMessagePromise,
   addMessageAsync,
+  getMessages,
 };

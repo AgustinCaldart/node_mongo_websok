@@ -3,11 +3,15 @@ const { success, problem } = require('./../../network/response');
 const controller = require('./controller');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  const body = req.body;
-  console.log(body);
-  res.send('Hola desde router');
+router.get('/', async (req, res) => {
+  try {
+    const message = await controller.getMessages();
+    success(req, res, message, 201);
+  } catch (error) {
+    problem(req, res, error, 401);
+  }
 });
+
 router.post('/', (req, res) => {
   controller
     .addMessagePromise(req.body.user, req.body.message)
