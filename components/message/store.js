@@ -17,12 +17,17 @@ async function getMessage() {
   const messages = await Model.find();
   return messages;
 }
+async function updateText(id, message) {
+  const foundMessage = await Model.findById(id);
+  foundMessage.message = message;
+  const newMessage = foundMessage.save();
+  return newMessage;
+}
 
 module.exports = {
   add: addMessage,
   list: getMessage,
-  //get
-  //update
+  updateText,
   //delete
 };
 

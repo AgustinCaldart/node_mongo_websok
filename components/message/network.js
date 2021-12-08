@@ -34,6 +34,28 @@ router.post('/async', async (req, res) => {
     problem(req, res, error, 401);
   }
 });
+router.patch('/:id', async (req, res) => {
+  try {
+    const newMessage = await controller.updateMessage(
+      req.params.id,
+      req.body.message
+    );
+    success(req, res, newMessage, 200);
+  } catch (error) {
+    problem(req, res, error, 500);
+  }
+
+  /*
+  controller
+    .updateMessage(req.params.id, req.body.message)
+    .then((data) => {
+      success(req, res, data, 200);
+    })
+    .catch((e) => {
+      problem(req, res, e, 500);
+    });
+*/
+});
 
 router.post('/headers', (req, res) => {
   console.log(req.headers);

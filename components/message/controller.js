@@ -31,13 +31,21 @@ async function addMessageAsync(user, message) {
 }
 
 async function getMessages() {
-  console.log(store.list());
   const rta = await store.list();
   return rta;
+}
+
+async function updateMessage(id, message) {
+  if (!id || !message) {
+    return reject('invalid Data');
+  }
+  const result = await store.updateText(id, message);
+  return result;
 }
 
 module.exports = {
   addMessagePromise,
   addMessageAsync,
   getMessages,
+  updateMessage,
 };
