@@ -1,4 +1,5 @@
 const { connect } = require('mongoose');
+const { capitalizarPalabras } = require('../../utils');
 const Model = require('./model');
 
 const CONECTOR =
@@ -7,14 +8,21 @@ const OPTIONS = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
+
 function addMessage(message) {
-  /* list.push(message); */
   const myMessage = new Model(message);
   myMessage.save();
 }
 
-async function getMessage() {
-  const messages = await Model.find();
+async function getMessage(filterUser) {
+  let filter = {};
+  if (filterUser !== null) {
+    filter = { user: capitalizarPalabras(filterUser) };
+  }
+  const messages = await Model.find(filter);
+  if (messages.length === 0) {
+    return 'Usuario no encontrado';
+  }
   return messages;
 }
 async function updateText(id, message) {

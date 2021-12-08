@@ -4,8 +4,9 @@ const controller = require('./controller');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+  const filterMessages = req.query.user || null;
   try {
-    const message = await controller.getMessages();
+    const message = await controller.getMessages(filterMessages);
     success(req, res, message, 201);
   } catch (error) {
     problem(req, res, error, 401);
@@ -44,7 +45,6 @@ router.patch('/:id', async (req, res) => {
   } catch (error) {
     problem(req, res, error, 500);
   }
-
   /*
   controller
     .updateMessage(req.params.id, req.body.message)

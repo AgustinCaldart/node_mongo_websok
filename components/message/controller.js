@@ -30,8 +30,8 @@ async function addMessageAsync(user, message) {
   return fullMessage;
 }
 
-async function getMessages() {
-  const rta = await store.list();
+async function getMessages(filterUser) {
+  const rta = await store.list(filterUser);
   return rta;
 }
 
