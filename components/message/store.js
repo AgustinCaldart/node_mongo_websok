@@ -31,12 +31,16 @@ async function updateText(id, message) {
   const newMessage = foundMessage.save();
   return newMessage;
 }
+async function removeMessage(id) {
+  const message = Model.findByIdAndDelete(id);
+  return message;
+}
 
 module.exports = {
   add: addMessage,
   list: getMessage,
   updateText,
-  //delete
+  removeMessage,
 };
 
 connect(CONECTOR, OPTIONS, (MongoError) => {

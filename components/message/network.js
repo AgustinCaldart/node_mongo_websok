@@ -64,4 +64,14 @@ router.post('/headers', (req, res) => {
   success(req, res, 'hola desde router post', 202);
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const message = req.params.id;
+    await controller.deleteMessage(message);
+    success(req, res, `Mensaje eliminado ${message}`);
+  } catch (error) {
+    problem(req, res, error, 500);
+  }
+});
+
 module.exports = router;

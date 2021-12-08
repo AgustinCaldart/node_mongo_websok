@@ -42,10 +42,18 @@ async function updateMessage(id, message) {
   const result = await store.updateText(id, message);
   return result;
 }
+async function deleteMessage(id) {
+  if (!id) {
+    return 'id invalido';
+  }
+  const result = await store.removeMessage(id);
+  return result;
+}
 
 module.exports = {
   addMessagePromise,
   addMessageAsync,
   getMessages,
   updateMessage,
+  deleteMessage,
 };
