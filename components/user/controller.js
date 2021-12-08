@@ -10,7 +10,12 @@ async function addUser(name) {
   store.add(user);
   return user;
 }
+async function getUser(filterUser) {
+  const rta = await store.list(filterUser);
+  return rta;
+}
 
 module.exports = {
   addUser,
+  getUser,
 };
