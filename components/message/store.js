@@ -6,16 +6,21 @@ function addMessage(message) {
   myMessage.save();
 }
 
-async function getMessage(filterUser) {
-  let filter = {};
-  if (filterUser !== null) {
-    filter = { user: capitalizarPalabras(filterUser) };
-  }
-  const messages = await Model.find(filter);
-  if (messages.length === 0) {
-    return 'Usuario no encontrado';
-  }
-  return messages;
+function getMessage(filterUser) {
+  return new Promise((resolve, reject) => {
+    let filter = {};
+    if (filterUser !== null) {
+      filter = { user: capitalizarPalabras(filterUser) };
+    }
+    Model.find(filter)
+      .populate('user')
+      .exec((error, populated) => {
+        if (error) {
+          return reject(error);
+        }
+        resolve(populated);
+      });
+  });
 }
 async function updateText(id, message) {
   const foundMessage = await Model.findById(id);
