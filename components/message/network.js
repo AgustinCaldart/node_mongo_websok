@@ -6,7 +6,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, __dirname + '../../../uploads');
+    cb(null, './uploads');
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
@@ -38,10 +38,9 @@ router.post('/f', upload.single('file'), function (req, res) {
     });
 });
 
-router.post('/', upload.none(), async (req, res) => {
+router.post('/', upload.single('file'), async (req, res) => {
   try {
     const newMessage = await controller.addMessageAsync(
-      req.body.file,
       req.body.chat,
       req.body.user,
       req.body.message

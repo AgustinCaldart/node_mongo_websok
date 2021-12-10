@@ -11,6 +11,14 @@ router.get('/:userId', async (req, res) => {
     problem(req, res, error, 401);
   }
 });
+router.get('/', async (req, res) => {
+  try {
+    const message = await controller.getChat();
+    success(req, res, message, 201);
+  } catch (error) {
+    problem(req, res, error, 401);
+  }
+});
 
 router.post('/', function (req, res) {
   controller
