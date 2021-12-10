@@ -8,17 +8,17 @@ function addMessage(chat, user, message) {
       return false;
     }
 
-    /*  let fileUrl = '';
+      let fileUrl = '';
       if (file) {
           fileUrl = 'http://localhost:3000/app/files/' + file.filename;
-      } */
+      } 
 
     const fullMessage = {
       chat: chat,
       user: user,
       message: message,
       date: new Date(),
-      //file: fileUrl,
+      file: fileUrl,
     };
 
     store.add(fullMessage);
@@ -27,15 +27,21 @@ function addMessage(chat, user, message) {
   });
 }
 
-async function addMessageAsync(chat, user, message) {
+async function addMessageAsync(chat, user, message,file) {
   if (!chat || !user || !message) {
     throw 'Los datos son incorrectos';
   }
+  let fileUrl = '';
+  if (file) {
+      fileUrl = `http://localhost:3000/app/files/${file.filename}`;
+  } 
+  console.log(fileUrl)
   const fullMessage = {
     chat: chat,
     user: user,
     message: message,
     data: new Date(),
+    file: fileUrl,
   };
   store.add(fullMessage);
   return fullMessage;
