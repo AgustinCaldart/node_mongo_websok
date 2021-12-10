@@ -4,17 +4,15 @@ const { success, problem } = require('./../../network/response');
 const controller = require('./controller');
 const router = express.Router();
 
-const storage = multer.diskStorage({
+var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads');
+    cb(null, './uploads')
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + '-' + uniqueSuffix);
-  },
-});
-
-const upload = multer({ storage: storage });
+    cb(null, file.originalname)
+  }
+})
+var upload = multer({ storage: storage })
 
 router.get('/', async (req, res) => {
   const filterMessages = req.query.user || null;
