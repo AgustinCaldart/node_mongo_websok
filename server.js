@@ -1,4 +1,5 @@
 const express = require('express');
+const { config } = require('./config/config');
 const bodyParser = require('body-parser');
 const { connect } = require('mongoose');
 const router = require('./network/routes');
@@ -20,8 +21,9 @@ server.listen(3000, function () {
   console.log(`la aplicacion esta escuchando en http://localhost:3000`);
 });
 
-const CONECTOR =
-  'mongodb+srv://root:root123@message.nmbvy.mongodb.net/message?retryWrites=true&w=majority';
+const URL = `mongodb+srv://${config.dbUser}:${config.dbPassword}@message.nmbvy.mongodb.net/${config.dbName}?retryWrites=true&w=majority`;
+
+const CONECTOR = URL;
 const OPTIONS = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
