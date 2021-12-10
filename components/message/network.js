@@ -1,19 +1,19 @@
 const express = require('express');
 const multer = require('multer');
-const path = require('path')
+const path = require('path');
 const { success, problem } = require('./../../network/response');
 const controller = require('./controller');
 const router = express.Router();
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './static/files/')
+    cb(null, './static/files/');
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)) 
-  }
-})
-var upload = multer({ storage: storage })
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+var upload = multer({ storage: storage });
 
 router.get('/', async (req, res) => {
   const filterMessages = req.query.user || null;
@@ -43,8 +43,8 @@ router.post('/', upload.single('file'), async (req, res) => {
       req.body.chat,
       req.body.user,
       req.body.message,
-      req.file,
-      );
+      req.file
+    );
     success(req, res, newMessage, 201);
   } catch (error) {
     problem(req, res, error, 401);

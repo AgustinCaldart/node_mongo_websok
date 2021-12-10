@@ -4,20 +4,19 @@ const { connect } = require('mongoose');
 const router = require('./network/routes');
 //requirimos express
 const app = express();
-const socket = require('./socket')
-const server = require('http').Server(app)
+const socket = require('./socket');
+const server = require('http').Server(app);
 //trabajar json
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-socket.connect(server)
+socket.connect(server);
 //iniciamos el router
 router(app);
 
 app.use('/app', express.static('static'));
 //prendemos express
-server.listen(3000,function (){
-
+server.listen(3000, function () {
   console.log(`la aplicacion esta escuchando en http://localhost:3000`);
 });
 
