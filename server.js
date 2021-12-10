@@ -10,7 +10,7 @@ router(app);
 
 app.use('/app', express.static('static'));
 //prendemos express
-app.listen(3000);
+app.listen(3001);
 console.log(`la aplicacion esta escuchando en http://localhost:3000`);
 
 const CONECTOR =

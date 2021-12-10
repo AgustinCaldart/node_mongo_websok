@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
+router.post('/promise', (req, res) => {
   controller
     .addMessagePromise(req.body.user, req.body.message)
     .then((fullMessage) => {
@@ -24,9 +24,10 @@ router.post('/', (req, res) => {
     });
 });
 
-router.post('/async', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newMessage = await controller.addMessageAsync(
+      req.body.chat,
       req.body.user,
       req.body.message
     );

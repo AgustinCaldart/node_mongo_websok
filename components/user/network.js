@@ -13,6 +13,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:userId', function (req, res) {
+  controller
+    .listChats(req.params.userId)
+    .then((users) => {
+      response.success(req, res, users, 200);
+    })
+    .catch((err) => {
+      response.error(req, res, 'Internal error', 500, err);
+    });
+});
+
 router.post('/', async (req, res) => {
   try {
     const newUser = await controller.addUser(req.body.name);

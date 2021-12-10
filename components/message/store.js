@@ -6,11 +6,11 @@ function addMessage(message) {
   myMessage.save();
 }
 
-function getMessage(filterUser) {
+function getMessage(filterChat) {
   return new Promise((resolve, reject) => {
     let filter = {};
-    if (filterUser !== null) {
-      filter = { user: capitalizarPalabras(filterUser) };
+    if (filterChat !== null) {
+      filter = { chat: filterChat };
     }
     Model.find(filter)
       .populate('user')
