@@ -1,7 +1,20 @@
 const express = require('express');
+const multer = require('multer');
 const { success, problem } = require('./../../network/response');
 const controller = require('./controller');
 const router = express.Router();
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, __dirname + '../../../uploads');
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + '-' + uniqueSuffix);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 router.get('/', async (req, res) => {
   const filterMessages = req.query.user || null;
@@ -13,20 +26,22 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/promise', (req, res) => {
+router.post('/f', upload.single('file'), function (req, res) {
   controller
-    .addMessagePromise(req.body.user, req.body.message)
+
+    .addMessage(req.body.chat, req.body.user, req.body.message)
     .then((fullMessage) => {
       success(req, res, fullMessage, 201);
     })
     .catch((e) => {
-      problem(req, res, 'Error simulado', 401);
+      error(req, res, 'Informacion invalida', 400, 'Error en el controlaor');
     });
 });
 
-router.post('/', async (req, res) => {
+router.post('/', upload.none(), async (req, res) => {
   try {
     const newMessage = await controller.addMessageAsync(
+      req.body.file,
       req.body.chat,
       req.body.user,
       req.body.message
